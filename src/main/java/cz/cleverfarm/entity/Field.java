@@ -3,11 +3,10 @@ package cz.cleverfarm.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.opengis.geometry.coordinate.Polygon;
+import org.locationtech.jts.geom.Polygon;
 
 import java.util.UUID;
 
-import static java.util.UUID.randomUUID;
 import static lombok.AccessLevel.PRIVATE;
 
 @AllArgsConstructor
@@ -18,7 +17,9 @@ import static lombok.AccessLevel.PRIVATE;
 @ToString(of = "id")
 public class Field {
 
-    UUID uuid = randomUUID();
+    Long id;
+
+    UUID uuid;
 
     String name;
 
@@ -26,5 +27,9 @@ public class Field {
 
     Polygon polygon;
 
-    Farm job;
+    Farm farm;
+
+    public double getArea(){
+        return polygon.getArea();
+    }
 }

@@ -1,41 +1,31 @@
 package cz.cleverfarm;
 
-import cz.cleverfarm.entity.Field;
 import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LinearRing;
-import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application {
 
-    public static void main(String[] args) {
-        Field field = new Field();
-        field.setName("field1");
-        field.setNote("corn field");
-        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
-        Coordinate[] coords = new Coordinate[]{
-                new Coordinate(49.196643, 16.595905),
-                new Coordinate(49.192583, 16.599928),
-                new Coordinate(49.195773, 16.602310),
-                new Coordinate(49.196643, 16.595905)
-        };
-
-        Polygon polygon = geometryFactory.createPolygon(coords);
-
-        System.out.println(polygon.getArea());
-
-//        SpringApplication.run(Application.class, args);
+    @Bean
+    public Validator validatorFactory() {
+        return new LocalValidatorFactoryBean();
     }
 
-    @Override
-    public void run(String... args) throws Exception {
+    @Bean
+    public GeometryFactory getGeometryFactory() {
+        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+        return geometryFactory;
+    }
 
 
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }

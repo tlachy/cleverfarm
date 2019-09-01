@@ -19,7 +19,9 @@ import static lombok.AccessLevel.PRIVATE;
 @ToString(of = "id")
 public class Farm {
 
-    UUID uuid = randomUUID();
+    Long id;
+
+    UUID uuid;
 
     String name;
 
